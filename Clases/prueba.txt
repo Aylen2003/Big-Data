@@ -1,0 +1,11 @@
+data_grouped = data.groupby('class')
+
+data_grouped.get_group('First')
+
+for key, group in data_grouped:
+    print(key)
+    display(group.head(3))
+
+Crear bines para las edades: (0-18] (18-80]
+
+¿Qué porcentaje de pasajeros sobrevivió, dado su sexo, franja etaria y clase?
