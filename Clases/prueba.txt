@@ -6,6 +6,4 @@ for key, group in data_grouped:
     print(key)
     display(group.head(3))
 
-Crear bines para las edades: (0-18] (18-80]
-
-¿Qué porcentaje de pasajeros sobrevivió, dado su sexo, franja etaria y clase?
+Hacer una tabla pivot que la fracción de sobrevivientes y valor medio de la tarifa segun la clase y el sexo
