@@ -1,11 +1,38 @@
+import pandas as pd
+import numpy as np
+
+# Ejemplo de DataFrame, reemplaza esto con tu DataFrame real
+data = pd.DataFrame({
+    'age': [22, 38, 26, 35, 28, 2, 54, 14, 20, 34, 30, 19],
+    'sex': ['male', 'female', 'female', 'female', 'male', 'male', 'male', 'female', 'male', 'female', 'male', 'female'],
+    'class': ['Third', 'First', 'Third', 'First', 'Third', 'Third', 'First', 'Second', 'Third', 'Second', 'Third', 'Second'],
+    'survived': [0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+})
+
+# Agrupamos los datos por clase
 data_grouped = data.groupby('class')
 
-data_grouped.get_group('First')
+# Obtenemos el grupo de pasajeros de primera clase
+first_class_group = data_grouped.get_group('First')
+print("First Class Group:")
+display(first_class_group)
 
+# Iteramos sobre cada grupo y mostramos los primeros 3 registros
 for key, group in data_grouped:
-    print(key)
+    print(f"Class: {key}")
     display(group.head(3))
 
-Crear bines para las edades: (0-18] (18-80]
+# Crear bines para las edades
+bins = [0, 18, 80]
+labels = ['0-18', '18-80']
+data['age_group'] = pd.cut(data['age'], bins, labels=labels, right=True)
 
-¿Qué porcentaje de pasajeros sobrevivió, dado su sexo, franja etaria y clase?
+# Calculamos el porcentaje de pasajeros que sobrevivieron según su sexo, franja etaria y clase
+survival_rates = data.groupby(['sex', 'age_group', 'class'])['survived'].mean().reset_index()
+
+# Renombramos la columna para mayor claridad
+survival_rates.rename(columns={'survived': 'survival_rate'}, inplace=True)
+survival_rates['survival_rate'] *= 100  # Convertir a porcentaje
+
+print("\nSurvival Rates by Sex, Age Group, and Class:")
+print(survival_rates)
